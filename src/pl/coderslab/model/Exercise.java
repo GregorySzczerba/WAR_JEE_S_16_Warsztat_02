@@ -1,6 +1,4 @@
-package pl.coderslab;
-
-import pl.coderslab.model.User;
+package pl.coderslab.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -111,3 +109,4 @@ public class Exercise {
                 '}';
     }
 }
+

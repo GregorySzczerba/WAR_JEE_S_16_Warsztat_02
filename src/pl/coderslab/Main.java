@@ -1,5 +1,6 @@
 package pl.coderslab;
 
+import pl.coderslab.model.Exercise;
 import pl.coderslab.model.User;
 import pl.coderslab.util.DbUtil;
 
@@ -26,25 +27,25 @@ public class Main {
                 System.out.println(userElement);
             }*/
 
-            Exercise exercise = new Exercise("testowy exercise", "jakis tam description");
+
             //exercise.saveToDB(connection);
             //Exercise.loadExerciseById(connection, 1);
             //exercise.toString();
             //System.out.println(exercise);
             //exercise.saveToDB(connection);
             //exercise.setTitle("nowy testowy title");
-            exercise = Exercise.loadExerciseById(connection, 5);
-            exercise.delete(connection);
+            //exercise = pl.coderslab.Exercise.loadExerciseById(connection, 5);
+            //exercise.delete(connection);
 
 
 
-            Exercise[] exercises = Exercise.loadAllExercise(connection);
-            for (Exercise exerciseElement : exercises) {
-                System.out.println(exerciseElement);
-            }
+            //pl.coderslab.Exercise[] exercises = pl.coderslab.Exercise.loadAllExercise(connection);
+            //for (pl.coderslab.Exercise exerciseElement : exercises) {
+            //    System.out.println(exerciseElement);
+            //}
 
 
-
+            Exercise exercise = new Exercise();
 
             /*User user = new User("test", "tedsfd@fdgg.pl", "dsfdgg");
             User.loadUserById(connection, 1);
