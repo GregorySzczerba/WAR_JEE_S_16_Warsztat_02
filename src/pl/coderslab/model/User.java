@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class User {
     private int id;
@@ -90,7 +91,8 @@ public class User {
             loadedUser.username = resultSet.getString("username");
             loadedUser.password = resultSet.getString("password");
             loadedUser.email = resultSet.getString("email");
-            return loadedUser;}
+            return loadedUser;
+        }
         return null;
     }
 
@@ -116,6 +118,90 @@ public class User {
             preparedStatement.setInt(1, this.id);
             preparedStatement.executeUpdate();
             this.id = 0;
+        }
+    }
+
+
+    public static void usersManagment(Connection connection) throws SQLException {
+        boolean quit = false;
+        User[] users = User.loadAllUsers(connection);
+        for (User userElement : users) {
+            System.out.println(userElement);
+        }
+        System.out.println("Wybierz jedną z opcji: ");
+        System.out.println("add - dodanie nowego użytkownika");
+        System.out.println("edit - edycja użytkownika");
+        System.out.println("delete - skasowanie użytkownika");
+        System.out.println("quit - wyjście z programu");
+
+
+        Scanner scanner = new Scanner(System.in);
+        String option = scanner.nextLine();
+
+        while (!quit) {
+
+
+            switch (option) {
+
+                case "quit":
+                    quit = true;
+                    System.out.println("Do widzenia");
+                    break;
+
+                case "delete":
+                    System.out.println("Podaj id użytkownika, którego chcesz usunąć");
+                    int id = scanner.nextInt();
+                    User user = User.loadUserById(connection, id);
+                    user.delete(connection);
+
+                    break;
+
+                case "add":
+                    System.out.println("Podaj nazwę użytkownika: ");
+                    String username = scanner.nextLine();
+                    System.out.println("Podaj email użytkownika : ");
+                    String email = scanner.nextLine();
+                    System.out.println("Podaj hasło uzytkownika: ");
+                    String password = scanner.nextLine();
+
+                    User user1 = new User(username, email, password);
+                    user1.saveToDB(connection);
+                    break;
+
+                case "edit":
+                    System.out.println("Podaj nową nazwę użytkownika: ");
+                    username = scanner.nextLine();
+                    System.out.println("Podaj nowy email użytkownika : ");
+                    email = scanner.nextLine();
+                    System.out.println("Podaj nowe hasło uzytkownika: ");
+                    password = scanner.nextLine();
+                    System.out.println("Podaj id użytkownika do edycji");
+                    id = scanner.nextInt();
+                    user = User.loadUserById(connection, id);
+                    user.setUsername(username);
+                    user.setEmail(email);
+                    user.setPassword(password);
+                    user.saveToDB(connection);
+                    break;
+
+                default:
+                    System.out.println("Podaj poprawną opcję");
+                    break;
+
+            }
+            if (!"quit".equals(option)) {
+                users = User.loadAllUsers(connection);
+                for (User userElement : users) {
+                    System.out.println(userElement);
+                }
+                System.out.println("Wybierz jedną z opcji: ");
+                System.out.println("add - dodanie nowego użytkownika");
+                System.out.println("edit - edycja użytkownika");
+                System.out.println("delete - skasowanie użytkownika");
+                System.out.println("quit - wyjście z programu");
+                option = scanner.nextLine();
+
+            }
         }
     }
 

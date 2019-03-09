@@ -128,11 +128,27 @@ public class Solution {
         Solution[] uArray = new Solution[solutions.size()];
         uArray = solutions.toArray(uArray);
         return uArray;
+    }
 
+    static public Solution[] loadAllByExerciseId(Connection conn) throws  SQLException {
+        ArrayList<Solution> solutions = new ArrayList<Solution>();
+        String sql = " select * from solution order by created desc";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            Solution loadedSolution = new Solution();
+            loadedSolution.id = resultSet.getInt("id");
+            loadedSolution.created = resultSet.getString("created");
+            loadedSolution.updated = resultSet.getString("updated");
+            loadedSolution.description = resultSet.getString("description");
+            loadedSolution.exercise_id = resultSet.getInt("exercise_id");
+            loadedSolution.users_id = resultSet.getInt("users_id");
 
-
-
-
+            solutions.add(loadedSolution);
+        }
+        Solution[] uArray = new Solution[solutions.size()];
+        uArray = solutions.toArray(uArray);
+        return uArray;
     }
 
     static public Solution[] loadAllSolutions(Connection conn) throws SQLException {
@@ -151,9 +167,9 @@ public class Solution {
 
             solutions.add(loadedSolution);
         }
-        Solution[] uArray = new Solution[solutions.size()];
-        uArray = solutions.toArray(uArray);
-        return uArray;
+        Solution[] sArray = new Solution[solutions.size()];
+        sArray = solutions.toArray(sArray);
+        return sArray;
     }
 
     public void delete(Connection conn) throws SQLException {
