@@ -103,8 +103,36 @@ public class Solution {
             loadedSolution.description = resultSet.getString("description");
             loadedSolution.exercise_id = resultSet.getInt("exercise_id");
             loadedSolution.users_id = resultSet.getInt("users_id");
-            return loadedSolution;}
+            return loadedSolution;
+        }
         return null;
+    }
+
+    static public Solution[] loadAllByUserId(Connection conn, int id) throws  SQLException {
+        ArrayList<Solution> solutions = new ArrayList<Solution>();
+        String sql = " select * from solution join users on solution.users_id = users.id where users.id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            Solution loadedSolution = new Solution();
+            loadedSolution.id = resultSet.getInt("id");
+            loadedSolution.created = resultSet.getString("created");
+            loadedSolution.updated = resultSet.getString("updated");
+            loadedSolution.description = resultSet.getString("description");
+            loadedSolution.exercise_id = resultSet.getInt("exercise_id");
+            loadedSolution.users_id = resultSet.getInt("users_id");
+
+            solutions.add(loadedSolution);
+        }
+        Solution[] uArray = new Solution[solutions.size()];
+        uArray = solutions.toArray(uArray);
+        return uArray;
+
+
+
+
+
     }
 
     static public Solution[] loadAllSolutions(Connection conn) throws SQLException {
@@ -121,7 +149,8 @@ public class Solution {
             loadedSolution.exercise_id = resultSet.getInt("exercise_id");
             loadedSolution.users_id = resultSet.getInt("users_id");
 
-            solutions.add(loadedSolution);}
+            solutions.add(loadedSolution);
+        }
         Solution[] uArray = new Solution[solutions.size()];
         uArray = solutions.toArray(uArray);
         return uArray;

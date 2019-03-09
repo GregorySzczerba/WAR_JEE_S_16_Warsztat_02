@@ -63,11 +63,15 @@ public class Main {
             }*/
 
             ;
-            Solution solution = Solution.loadSolutionById(connection, 1);
+           /* Solution solution = Solution.loadSolutionById(connection, 1);
             solution.setDescription("calkiem nowy description");
             solution.saveToDB(connection);
             solution.delete(connection);
 
+*/          Solution[] solutions = Solution.loadAllByUserId(connection, 3);
+            for (Solution elementsSolution : solutions) {
+                System.out.println(elementsSolution);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
