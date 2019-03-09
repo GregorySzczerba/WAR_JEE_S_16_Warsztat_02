@@ -1,6 +1,7 @@
 package pl.coderslab;
 
 import pl.coderslab.model.Exercise;
+import pl.coderslab.model.Solution;
 import pl.coderslab.model.User;
 import pl.coderslab.util.DbUtil;
 
@@ -45,11 +46,27 @@ public class Main {
             //}
 
 
-            Exercise exercise = new Exercise();
+            //Exercise exercise = new Exercise();
 
             /*User user = new User("test", "tedsfd@fdgg.pl", "dsfdgg");
             User.loadUserById(connection, 1);
             user.toString();*/
+
+            /*Solution solution = new Solution("2019-03-09", "jakis nowy description", 1, 1);
+            System.out.println(solution);
+            solution.saveToDB(connection);
+            System.out.println(Solution.loadSolutionById(connection, 1));*/
+
+            /*Solution[] solutions = Solution.loadAllSolutions(connection);
+            for (Solution elementSolution : solutions ) {
+                System.out.println(elementSolution);
+            }*/
+
+            ;
+            Solution solution = Solution.loadSolutionById(connection, 1);
+            solution.setDescription("calkiem nowy description");
+            solution.saveToDB(connection);
+            solution.delete(connection);
 
 
         } catch (SQLException e) {
